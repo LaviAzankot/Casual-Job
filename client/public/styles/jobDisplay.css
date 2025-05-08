@@ -1,0 +1,16 @@
+.jobDisplay {
+    margin-top: 50px;
+}
+
+.jobItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    row-gap: 60px;
+    column-gap: 30px;
+}
+
+.message {
+    font-size: max(1vw, 20px);
+    font-weight: 450;
+    padding: 20px 0px;
+}

@@ -1,0 +1,50 @@
+.jobItem {
+  position: relative;
+  height: 350px;
+  width: 100%;
+  margin: auto;
+  border-radius: 15px;
+}
+
+.jobItemImage img {
+  height: 250px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px #00000015;
+}
+
+.jobItemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+p {
+  font-weight: 400;
+  color: #6a6a6a;
+  font-size: 16px;
+}
+
+.jobItemDesc {
+  margin-top: 5px;
+}
+
+.jobItemDesc,
+.jobItemPrice {
+  font-size: 18px;
+  font-weight: 400;
+  color: black;
+}
+
+.saveItem {
+  height: 25px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.saveItem img {
+  height: 25px;
+  object-fit: cover;
+}

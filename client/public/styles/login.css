@@ -1,0 +1,94 @@
+.login-container {
+  width: 600px;
+  margin: auto;
+  padding: 50px;
+  border: 1px solid #cacaca;
+  border-radius: 15px;
+  box-shadow: 1px 1px 10px #cacaca;
+}
+
+.login-container.sign-up {
+  height: 700px;
+}
+
+.login-container .login-header {
+  display: flex;
+  align-items: center;
+}
+
+.login-header h3 {
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-weight: 400;
+}
+
+.login-container .login-title {
+  margin: 30px 0 10px 0;
+}
+
+.login-title h2 {
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.login-container .login-inputs {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-inputs input {
+  height: 50px;
+  padding: 12px 10px;
+  font-size: 16px;
+  border: 1px solid #9e9e9e;
+  box-shadow: 1px 1px 3px #878787;
+  border-radius: 2px;
+}
+
+.login-container .change-auth {
+  color: #595959;
+  font-weight: 350;
+  font-size: 17px;
+  padding: 25px 0px;
+}
+
+.login-container button {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(0.9turn, #cc93a2, #e9bc78);
+  color: white;
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 2px;
+  border: 1px solid #d9d9d9;
+}
+
+.login-message {
+  margin: 5px 0 -5px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-message img {
+  height: 12px;
+}
+
+.login-message p {
+  color: #ff3737;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    width: 100%;
+    padding: 0px;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+  }
+}
