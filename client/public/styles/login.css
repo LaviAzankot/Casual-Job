@@ -1,14 +1,15 @@
 .login-container {
-  width: 600px;
+  width: 90%;
   margin: auto;
   padding: 50px;
   border: 1px solid #cacaca;
   border-radius: 15px;
   box-shadow: 1px 1px 10px #cacaca;
+  background-color: white;
 }
 
 .login-container.sign-up {
-  height: 700px;
+  height: 2500px;
 }
 
 .login-container .login-header {
@@ -32,8 +33,15 @@
   letter-spacing: 0.2px;
 }
 
-.login-container .login-inputs {
+.login-container .login-fields {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-fields .login-inputs,
+.login-container .login-inputs {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -44,8 +52,25 @@
   padding: 12px 10px;
   font-size: 16px;
   border: 1px solid #9e9e9e;
-  box-shadow: 1px 1px 3px #878787;
-  border-radius: 2px;
+  box-shadow: 1px 1px 3px #d9d9d9;
+  border-radius: 5px;
+}
+
+.login-fields p {
+  padding: 8px 0px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.biography .ql-editor {
+  height: 500px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.biography .ql-editor::before {
+  font-size: 18px;
+  color: #999;
 }
 
 .login-container .change-auth {
@@ -55,7 +80,7 @@
   padding: 25px 0px;
 }
 
-.login-container button {
+.login-container #continue {
   width: 100%;
   height: 50px;
   background: linear-gradient(0.9turn, #cc93a2, #e9bc78);
@@ -64,6 +89,12 @@
   font-weight: 400;
   border-radius: 2px;
   border: 1px solid #d9d9d9;
+  cursor: pointer;
+  transition: 2s;
+}
+
+.login-container #continue:hover {
+  background: linear-gradient(0.9turn, #cf8699, #eeb661);
 }
 
 .login-message {
@@ -81,6 +112,19 @@
 .login-message p {
   color: #ff3737;
   font-weight: 500;
+}
+
+.biography p,
+.upload-image p,
+.upload-images p {
+  margin-bottom: 5px;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+#fileInputProfolio {
+  position: relative;
+  bottom: 0;
 }
 
 @media (max-width: 768px) {

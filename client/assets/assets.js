@@ -44,6 +44,7 @@ import exclamation_mark from "./icons/exclamation_mark.png";
 import remove from "./icons/remove.png";
 import update from "./icons/update.png";
 import picture from "./icons/picture.png";
+import cloudy from "./icons/cloudy.png";
 
 const assets = {
   logo,
@@ -62,6 +63,7 @@ const assets = {
   update,
   picture,
   user1,
+  cloudy,
 };
 
 const jobCategories = [
