@@ -69,10 +69,9 @@ export default function Login() {
           />
         </div>
 
-        <p className="change-auth" onClick={() => navigate("/sign-up")}>
-          New Here? Sign up
-        </p>
-
+        <div className="change-auth">
+          <p onClick={() => navigate("/sign-up")}>New Here? Sign up</p>
+        </div>
         <button type="submit" id="continue">
           Continue
         </button>

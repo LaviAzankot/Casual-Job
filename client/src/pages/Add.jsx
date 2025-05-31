@@ -155,7 +155,7 @@ export default function Add() {
               value={data.category}
               required
             >
-              <option value="" disabled hidden>
+              <option value="" disabled selected>
                 Choose Category
               </option>
               <option value="Sitter">Sitter</option>

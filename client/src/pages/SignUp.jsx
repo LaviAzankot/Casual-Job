@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
-/*import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";*/
 import "../../public/styles/login.css";
 import { assets } from "../../assets/assets.js";
 import axios from "axios";
@@ -14,6 +12,7 @@ import UploadMultiImages from "../components/UploadMultiImages.jsx";
 export default function SignUp() {
   const { api_port, setToken } = useContext(StoreContext);
   const [message, setMessage] = useState("");
+  const [joinUs, setJoinUs] = useState(false);
   const navigate = useNavigate();
 
   const modules = {
@@ -46,9 +45,10 @@ export default function SignUp() {
     password: "",
     phone: "",
     address: "",
+    category: "",
     profileImage: false,
     biography: "",
-    profolioImages: [],
+    portfolioImages: [],
   };
 
   const [data, setData] = useState(startData);
@@ -60,25 +60,32 @@ export default function SignUp() {
   async function authenticate(e) {
     e.preventDefault();
 
+    let endpoint = `${api_port}/api/auth`;
     const formData = new FormData();
 
     formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("phone", data.phone);
-    formData.append("address", data.address);
-    formData.append("biography", data.biography);
-    formData.append("profileImage", data.profileImage);
-    // Append each image file individually in order for multer to understand that they're seperate files.
-    data.profolioImages.forEach((file) => {
-      formData.append("profolioImages", file);
-    });
+
+    // If wants to become a freelancer add this additional fields.
+    if (joinUs) {
+      formData.append("freelancer", joinUs);
+      formData.append("phone", data.phone);
+      formData.append("address", data.address);
+      formData.append("category", data.category);
+      formData.append("biography", data.biography);
+      formData.append("profileImage", data.profileImage);
+      // Append each image file individually in order for multer to understand that they're seperate files.
+      data.portfolioImages.forEach((file) => {
+        formData.append("portfolioImages", file);
+      });
+      endpoint += "/registerFreelancer";
+    } else {
+      endpoint += "/register";
+    }
 
     try {
-      const response = await axios.post(
-        `${api_port}/api/auth/register`,
-        formData
-      );
+      const response = await axios.post(endpoint, formData);
 
       if (response.data.success) {
         // Authanticate the user & set the data to the start data
@@ -96,7 +103,11 @@ export default function SignUp() {
 
   return (
     <div className="login">
-      <form onSubmit={authenticate} className="login-container sign-up">
+      <form
+        onSubmit={authenticate}
+        className="login-container sign-up"
+        style={{ height: joinUs && "2100px" }}
+      >
         <div className="login-title">
           <h2>Welcome to Casual Job</h2>
         </div>
@@ -135,63 +146,107 @@ export default function SignUp() {
               placeholder="Password"
               required
             />
-            <input
-              type="text"
-              name="phone"
-              onChange={updateData}
-              value={data.phone}
-              placeholder="Phone"
-              required
-            />
-            <input
-              type="text"
-              name="address"
-              onChange={updateData}
-              value={data.address}
-              placeholder="Address"
-              required
-            />
+
+            {joinUs && (
+              <>
+                <input
+                  type="text"
+                  name="phone"
+                  onChange={updateData}
+                  value={data.phone}
+                  placeholder="Phone"
+                  required
+                />
+                <input
+                  type="text"
+                  name="address"
+                  onChange={updateData}
+                  value={data.address}
+                  placeholder="Address"
+                  required
+                />
+              </>
+            )}
           </div>
 
-          <div className="upload-image">
-            <p>Profile image</p>
-            <UploadSingleImage
-              data={data}
-              setData={setData}
-              name="profileImage"
-            />
-          </div>
+          {joinUs && (
+            <div className="join-us">
+              <select
+                className="category"
+                onChange={updateData}
+                name="category"
+                value={data.category}
+                required
+              >
+                <option value="" disabled selected hidden>
+                  Choose Category
+                </option>
+                <option value="Sitter">Sitter</option>
+                <option value="Dog Walker">Dog Walker</option>
+                <option value="Programming Tutor">Programming Tutor</option>
+                <option value="Math Tutor">Math Tutor</option>
+                <option value="English Tutor">English Tutor</option>
+                <option value="Science Tutor">Science Tutor</option>
+                <option value="Guitar Teacher">Guitar Teacher</option>
+                <option value="Piano Teacher">Piano Teacher</option>
+                <option value="Garden Pruning">Garden Pruning</option>
+                <option value="Editors">Editors</option>
+                <option value="Bakers">Bakers</option>
+                <option value="Cooks">Cooks</option>
+                <option value="Other">Other</option>
+              </select>
 
-          <div className="biography">
-            <p>Biography</p>
-            <ReactQuill
-              theme="snow"
-              onChange={(e) => {
-                setData((prevData) => ({
-                  ...prevData,
-                  biography: e,
-                }));
-              }}
-              value={data.biography}
-              modules={modules}
-              formats={formats}
-              placeholder="Write your biography here!"
-            />
-          </div>
+              <div className="upload-image">
+                <p>Profile image</p>
+                <UploadSingleImage
+                  data={data}
+                  setData={setData}
+                  name="profileImage"
+                />
+              </div>
 
-          <div className="upload-images">
-            <p>Profolio images</p>
-            <UploadMultiImages
-              data={data}
-              setData={setData}
-              name="profolioImages"
-            />
-          </div>
+              <div className="biography">
+                <p>Biography</p>
+                <ReactQuill
+                  theme="snow"
+                  onChange={(e) => {
+                    setData((prevData) => ({
+                      ...prevData,
+                      biography: e,
+                    }));
+                  }}
+                  value={data.biography}
+                  modules={modules}
+                  formats={formats}
+                  placeholder="Write your biography here!"
+                />
+              </div>
+
+              <div className="upload-images">
+                <p>Profolio images</p>
+                <UploadMultiImages
+                  data={data}
+                  setData={setData}
+                  name="portfolioImages"
+                />
+              </div>
+            </div>
+          )}
         </div>
 
-        <p className="change-auth" onClick={() => navigate("/login")}>
-          Already have an account? Login
-        </p>
+        <div className="change-auth">
+          {joinUs ? (
+            <p onClick={() => setJoinUs(false)}>New Here? Sign up</p>
+          ) : (
+            <p onClick={() => setJoinUs(true)}>
+              Join us today, become a freelancer!
+            </p>
+          )}
+
+          <p onClick={() => navigate("/login")}>
+            Already have an account? Login
+          </p>
+        </div>
 
         <button type="submit" id="continue">
           Continue

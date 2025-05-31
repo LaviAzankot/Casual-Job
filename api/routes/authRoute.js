@@ -1,5 +1,12 @@
 import express from "express";
-import { register, login } from "../controllers/authController.js";
+import {
+  register,
+  login,
+  getFreelancers,
+  registerFreelancer,
+  getFreelancer,
+  getUserId,
+} from "../controllers/authController.js";
 import multer from "multer";
 
 const authRouter = express.Router();
@@ -17,10 +24,14 @@ const upload = multer({ storage: storage });
 // Handle profileImage and profolioImages upload
 const uploadFields = upload.fields([
   { name: "profileImage", maxCount: 1 },
-  { name: "profolioImages", maxCount: 6 },
+  { name: "portfolioImages", maxCount: 6 },
 ]);
 
-authRouter.post("/register", uploadFields, register);
+authRouter.post("/register", register);
+authRouter.post("/registerFreelancer", uploadFields, registerFreelancer);
 authRouter.post("/login", login);
+authRouter.get("/getUserId/:token", getUserId);
+authRouter.get("/getFreelancers", getFreelancers);
+authRouter.get("/getFreelancer/:id", getFreelancer);
 
 export default authRouter;

@@ -10,6 +10,7 @@ import Login from "./pages/Login.jsx";
 import Manage from "./pages/Manage.jsx";
 import Add from "./pages/Add.jsx";
 import SignUp from "./pages/SignUp.jsx";
+import Freelancer from "./pages/Freelancer.jsx";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/manage" element={<Manage />} />
         <Route path="/manage/add" element={<Add />} />
         <Route path="/manage/edit" element={<Add />} />
+        <Route path="/freelancers/:id" element={<Freelancer />} />
       </Routes>
     </div>
   );

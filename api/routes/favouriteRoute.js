@@ -1,8 +1,15 @@
 import express from "express";
-import { updateFavs } from "../controllers/favouriteController.js";
+import {
+  addFavourite,
+  removeFavourite,
+  getUserFavourite,
+} from "../controllers/favouriteController.js";
+import authMiddleware from "../middleware/auth.js";
 
 const favouriteRouter = express.Router();
 
-favouriteRouter.post("/update", updateFavs);
+favouriteRouter.post("/add", authMiddleware, addFavourite);
+favouriteRouter.post("/get/:favouriteUserId", authMiddleware, getUserFavourite);
+favouriteRouter.post("/remove", authMiddleware, removeFavourite);
 
 export default favouriteRouter;

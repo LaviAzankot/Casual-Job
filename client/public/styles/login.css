@@ -8,10 +8,6 @@
   background-color: white;
 }
 
-.login-container.sign-up {
-  height: 2500px;
-}
-
 .login-container .login-header {
   display: flex;
   align-items: center;
@@ -45,6 +41,23 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  transition: 1s;
+}
+
+.login-container .join-us {
+  transition: 1s;
+}
+
+.join-us .category {
+  height: 50px;
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 16px;
+  border: 1px solid #9e9e9e;
+  box-shadow: 1px 1px 3px #d9d9d9;
+  border-radius: 5px;
+  margin-top: -8px;
+  margin-bottom: 8px;
 }
 
 .login-inputs input {
@@ -74,10 +87,16 @@
 }
 
 .login-container .change-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 25px 0px;
+}
+
+.login-container .change-auth p {
   color: #595959;
   font-weight: 350;
   font-size: 17px;
-  padding: 25px 0px;
 }
 
 .login-container #continue {
@@ -98,7 +117,7 @@
 }
 
 .login-message {
-  margin: 5px 0 -5px 0;
+  margin: 8px 0;
   display: flex;
   flex-direction: row;
   align-items: center;

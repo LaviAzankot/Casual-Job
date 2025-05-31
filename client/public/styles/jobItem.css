@@ -36,15 +36,3 @@
   font-weight: 400;
   color: black;
 }
-
-.saveItem {
-  height: 25px;
-  position: absolute;
-  top: 15px;
-  right: 15px;
-}
-
-.saveItem img {
-  height: 25px;
-  object-fit: cover;
-}

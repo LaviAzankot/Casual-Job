@@ -17,13 +17,15 @@
     "@mui/x-date-pickers": "^7.28.3",
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.511.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
-    "react-quill": "^2.0.0",
+    "react-quill": "^0.0.2",
     "react-quill-new": "^3.4.6",
     "react-router-dom": "^7.2.0",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

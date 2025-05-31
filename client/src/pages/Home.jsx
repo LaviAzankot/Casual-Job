@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
-import Header from '../components/Header.jsx';
-import JobDisplay from '../components/JobDisplay.jsx';
+import React from "react";
+import FreelancersDisplay from "../components/FreelancersDisplay";
 
 export default function Home() {
-  
-  const [category, setCategory] = useState("All");
-
+  /*const [category, setCategory] = useState("All");
+  <Header category={category} setCategory={setCategory}/> <JobDisplay category={category}/> */
   return (
     <div>
-      <Header category={category} setCategory={setCategory}/>
-      <JobDisplay category={category}/>
+      <FreelancersDisplay />
     </div>
-  )
+  );
 }

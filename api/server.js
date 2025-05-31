@@ -4,7 +4,8 @@ import cors from "cors";
 import db from "./config/db.js";
 import authRouter from "./routes/authRoute.js";
 import dotenv from "dotenv";
-import jobRouter from "./routes/jobRoute.js";
+import reviewRouter from "./routes/reviewRoute.js";
+import favouriteRouter from "./routes/favouriteRoute.js";
 
 const app = express();
 const port = 3000;
@@ -17,15 +18,15 @@ dotenv.config();
 
 db.connect();
 
-
-app.use("/images", express.static('uploads'));
+app.use("/images", express.static("uploads"));
 app.use("/api/auth", authRouter);
-app.use("/api/jobs", jobRouter);
+app.use("/api/favourite", favouriteRouter);
+app.use("/api/review", reviewRouter);
 
 app.get("/", (req, res) => {
-    res.send("API Working")
-})
+  res.send("API Working");
+});
 
 app.listen(port, () => {
-  console.log(`Server listening on port http://localhost:${port}/`)
-})
+  console.log(`Server listening on port http://localhost:${port}/`);
+});
