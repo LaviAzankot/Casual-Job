@@ -11,6 +11,7 @@ import "../../public/styles/freelancer.css";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { Pencil, Trash2 } from "lucide-react";
+import Heart from "../components/Heart";
 
 export default function Freelancer() {
   const { api_port, token } = useContext(StoreContext);
@@ -19,9 +20,10 @@ export default function Freelancer() {
   const [loading, setLoading] = useState(true);
   const [freelancer, setFreelancer] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [userId, setUserId] = useState(0);
   const [onEdit, setOnEdit] = useState(false);
   const [editId, setEditId] = useState(false);
+  const [wasClicked, setWasClicked] = useState(false);
+  const [avgRating, setAvgRating] = useState(null);
 
   const reviewStartData = {
     serviceDesc: "",
@@ -41,34 +43,75 @@ export default function Freelancer() {
 
   // Get freelancer data
   async function getFreelancer() {
-    const response = await axios.get(
-      `${api_port}/api/auth/getFreelancer/${id}`
-    );
+    try {
+      const response = await axios.get(
+        `${api_port}/api/auth/getFreelancer/${id}`
+      );
 
-    setFreelancer(response.data.freelancer);
+      setFreelancer(response.data.freelancer);
+    } catch (error) {
+      console.log(error);
+      setFreelancer([]);
+    }
   }
 
   // Get freelancer reviews
   async function getReviews() {
-    const response = await axios.get(`${api_port}/api/review/getReviews/${id}`);
-    setReviews(response.data.reviews);
+    try {
+      const response = await axios.get(
+        `${api_port}/api/review/getReviews/${id}`,
+        {
+          headers: {
+            token,
+          },
+        }
+      );
+      setReviews(response.data.reviews);
+    } catch (error) {
+      console.log(error);
+      setReviewData([]);
+    }
   }
 
-  // Get current user id
-  async function getUserId() {
-    const response = await axios.get(`${api_port}/api/auth/getUserId/${token}`);
-    setUserId(response.data.userId);
+  async function getAvgRating() {
+    try {
+      const response = await axios.get(
+        `${api_port}/api/review/getAvgRating/${id}`
+      );
+      setAvgRating(response.data.avgRating);
+    } catch (error) {
+      console.log(error);
+      setAvgRating(0);
+    }
+  }
+
+  async function checkIfFavorite() {
+    if (token) {
+      try {
+        const response = await axios.post(
+          `${api_port}/api/favourite/get/${id}`,
+          {},
+          { headers: { token } }
+        );
+        setWasClicked(response.data.favourite);
+      } catch (error) {
+        console.log("Error checking favorite status:", error);
+      }
+    }
   }
 
   useEffect(() => {
     // Get data
+
     async function getData() {
       try {
-        if (token) {
-          await getUserId();
-        }
-        await getFreelancer();
-        await getReviews();
+        // Fetch data in parallel for better performance
+        await Promise.all([
+          getFreelancer(),
+          getReviews(),
+          getAvgRating(),
+          checkIfFavorite(),
+        ]);
       } catch (error) {
         console.log(error);
       } finally {
@@ -77,7 +120,7 @@ export default function Freelancer() {
     }
 
     getData();
-  }, []);
+  }, [id, token]);
 
   // Add/Edit a rating
   async function handleRating(e) {
@@ -85,7 +128,6 @@ export default function Freelancer() {
     var endpoint = `${api_port}/api/review/add`;
 
     const payload = {
-      reviewer_id: userId,
       reviewed_user_id: id,
       short_service_desc: reviewData.serviceDesc,
       review: reviewData.review,
@@ -98,7 +140,11 @@ export default function Freelancer() {
     }
 
     try {
-      const response = await axios.post(endpoint, payload);
+      const response = await axios.post(endpoint, payload, {
+        headers: {
+          token,
+        },
+      });
       if (response.data.success) {
         if (onEdit) {
           setOnEdit(false);
@@ -132,15 +178,32 @@ export default function Freelancer() {
       reviewed_user_id: id,
     };
 
-    const response = await axios.post(`${api_port}/api/review/remove`, payload);
+    const response = await axios.post(
+      `${api_port}/api/review/remove`,
+      payload,
+      {
+        headers: {
+          token,
+        },
+      }
+    );
     if (response.data.success) {
       await getReviews();
     }
   }
 
+  const stopPropagation = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <div className="freelancer-page">
-      {!loading && (
+      {loading ? (
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading freelancer profile...</p>
+        </div>
+      ) : (
         <div className="freelancer-card">
           <div className="freelancer-header">
             <img
@@ -152,6 +215,16 @@ export default function Freelancer() {
               <h2 className="freelancer-name">{freelancer.name}</h2>
               <span className="freelancer-category">{freelancer.category}</span>
               <span className="freelancer-phone">📞 {freelancer.phone}</span>
+              <div className="freelancer-operations" onClick={stopPropagation}>
+                <div className="freelancer-favourite">
+                  <Heart
+                    freelancerId={id}
+                    wasClicked={wasClicked}
+                    setWasClicked={setWasClicked}
+                  />
+                </div>
+                <span className="freelancer-rating">⭐ {avgRating}/10</span>
+              </div>
             </div>
           </div>
           <div className="freelancer-biography">
@@ -250,7 +323,7 @@ export default function Freelancer() {
                     <span className="rating-score">⭐ {review.rating}/10</span>
                   </div>
                   <p className="review-text">"{review.review}"</p>
-                  {userId !== null && review.reviewer_id == userId && (
+                  {review.is_owner && (
                     <div className="review-actions">
                       <Pencil
                         className="icon edit-icon"

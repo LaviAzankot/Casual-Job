@@ -1,157 +1,377 @@
 .login-container {
   width: 90%;
-  margin: auto;
-  padding: 50px;
-  border: 1px solid #cacaca;
-  border-radius: 15px;
-  box-shadow: 1px 1px 10px #cacaca;
+  max-width: 550px;
+  margin: 40px auto;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   background-color: white;
+  transition: all 0.5s ease; /* Smoother transition for height changes */
+  height: auto; /* Allow container to expand */
+  min-height: fit-content; /* Ensure it fits content */
+  overflow: visible; /* Allow content to expand the container */
+  margin-bottom: 60px; /* Add more space at the bottom */
 }
 
 .login-container .login-header {
   display: flex;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 10px;
 }
 
 .login-header h3 {
-  left: 0;
-  right: 0;
-  margin: auto;
-  font-weight: 400;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: #555;
+  letter-spacing: 0.3px;
 }
 
 .login-container .login-title {
-  margin: 30px 0 10px 0;
+  margin: 25px 0 20px 0;
+  text-align: center;
 }
 
 .login-title h2 {
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.2px;
+  color: #333;
+  font-size: 1.8rem;
 }
 
 .login-container .login-fields {
-  margin-top: 20px;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .login-fields .login-inputs,
 .login-container .login-inputs {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  transition: 1s;
+  gap: 16px;
+  transition: all 0.3s ease;
 }
 
 .login-container .join-us {
-  transition: 1s;
+  transition: all 0.3s ease;
 }
 
 .join-us .category {
-  height: 50px;
+  height: 54px;
   width: 100%;
-  padding: 12px 10px;
+  padding: 12px 16px;
   font-size: 16px;
-  border: 1px solid #9e9e9e;
-  box-shadow: 1px 1px 3px #d9d9d9;
-  border-radius: 5px;
-  margin-top: -8px;
-  margin-bottom: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+  color: #333;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px top 50%;
+  background-size: 12px auto;
+}
+
+.join-us .category:focus {
+  border-color: #aaa;
+  background-color: white;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
 .login-inputs input {
-  height: 50px;
-  padding: 12px 10px;
+  height: 54px;
+  padding: 12px 16px;
   font-size: 16px;
-  border: 1px solid #9e9e9e;
-  box-shadow: 1px 1px 3px #d9d9d9;
-  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.login-inputs input:focus {
+  border-color: #aaa;
+  background-color: white;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
 .login-fields p {
-  padding: 8px 0px;
-  font-size: 16px;
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 15px;
   font-weight: 500;
+  color: #444;
+}
+
+.biography .ql-container {
+  border-radius: 0 0 8px 8px;
+  border-color: #e0e0e0;
+}
+
+.biography .ql-toolbar {
+  border-radius: 8px 8px 0 0;
+  border-color: #e0e0e0;
+  background-color: #fafafa;
 }
 
 .biography .ql-editor {
-  height: 500px;
+  height: 300px;
   white-space: pre-wrap;
   word-wrap: break-word;
+  font-size: 16px;
+  color: #333;
 }
 
 .biography .ql-editor::before {
-  font-size: 18px;
+  font-size: 16px;
   color: #999;
+  font-style: italic;
 }
 
 .login-container .change-auth {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 25px 0px;
+  padding: 30px 0 10px 0;
+  text-align: center;
 }
 
 .login-container .change-auth p {
-  color: #595959;
-  font-weight: 350;
-  font-size: 17px;
+  color: #666;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.login-container .change-auth a {
+  color: #2d7ff9;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.login-container .change-auth a:hover {
+  color: #1a5fc7;
+  text-decoration: underline;
 }
 
 .login-container #continue {
   width: 100%;
-  height: 50px;
-  background: linear-gradient(0.9turn, #cc93a2, #e9bc78);
+  height: 54px;
+  background: linear-gradient(135deg, #4a6cf7, #2d7ff9);
   color: white;
-  font-size: 18px;
-  font-weight: 400;
-  border-radius: 2px;
-  border: 1px solid #d9d9d9;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
   cursor: pointer;
-  transition: 2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(45, 127, 249, 0.2);
+  margin-top: 10px;
 }
 
 .login-container #continue:hover {
-  background: linear-gradient(0.9turn, #cf8699, #eeb661);
+  background: linear-gradient(135deg, #3a5ce6, #1a6de8);
+  box-shadow: 0 6px 15px rgba(45, 127, 249, 0.3);
+  transform: translateY(-2px);
+}
+
+.login-container #continue:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(45, 127, 249, 0.2);
 }
 
 .login-message {
-  margin: 8px 0;
+  margin: 12px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  padding: 12px 16px;
+  background-color: rgba(255, 55, 55, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid #ff3737;
 }
 
 .login-message img {
-  height: 12px;
+  height: 16px;
 }
 
 .login-message p {
   color: #ff3737;
   font-weight: 500;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
 }
 
 .biography p,
 .upload-image p,
 .upload-images p {
-  margin-bottom: 5px;
-  font-weight: 400;
-  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #444;
+}
+
+.upload-image,
+.upload-images {
+  margin-top: 10px;
+}
+
+.file-upload-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.file-upload-button {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #f5f5f5;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.file-upload-button:hover {
+  background-color: #eee;
+  border-color: #aaa;
+}
+
+.file-upload-button i {
+  margin-right: 8px;
 }
 
 #fileInputProfolio {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.uploaded-file-name {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.uploaded-images-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.uploaded-image-item {
   position: relative;
-  bottom: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.uploaded-image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-image {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.remove-image:hover {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+/* Adjust the upload image containers within login container */
+.login-container .upload-image,
+.login-container .upload-images {
+  margin-top: 20px;
+  margin-bottom: 30px; /* Add more space below image sections */
+}
+
+/* Ensure the login container expands with the upload area */
+.login-container #upload-area-single,
+.login-container #upload-area-multi {
+  overflow: visible;
+  margin-bottom: 30px; /* Space after upload area */
+}
+
+/* Adjust spacing for the continue button when there are images */
+.login-container .upload-images + #continue,
+.login-container .upload-image + #continue {
+  margin-top: 20px;
 }
 
 @media (max-width: 768px) {
   .login-container {
-    width: 100%;
-    padding: 0px;
-    border: none;
-    box-shadow: none;
-    margin: 0;
+    width: 95%;
+    padding: 25px 20px;
+    margin: 20px auto 40px; /* Increased bottom margin */
+  }
+
+  .login-title h2 {
+    font-size: 1.6rem;
+  }
+
+  .login-fields {
+    gap: 20px;
+  }
+
+  .login-inputs input,
+  .join-us .category,
+  .login-container #continue {
+    height: 50px;
+  }
+
+  .biography .ql-editor {
+    height: 200px;
+  }
+
+  .login-container .upload-image,
+  .login-container .upload-images {
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .login-container {
+    width: 80%;
+    margin-bottom: 50px; /* Increased bottom margin */
+  }
+}
+
+@media (min-width: 1025px) {
+  .login-container {
+    width: 70%;
+    max-width: 600px;
+    margin-bottom: 60px; /* Increased bottom margin */
   }
 }

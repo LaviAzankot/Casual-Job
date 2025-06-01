@@ -1,12 +1,12 @@
 import db from "../config/db.js";
 
 async function addFavourite(req, res) {
-  const { user_id, favourite_user_id } = req.body;
+  const { userId, favourite_user_id } = req.body;
 
   try {
     const response = await db.query(
       "INSERT INTO user_favourites (user_id, favourite_user_id) VALUES ($1, $2);",
-      [user_id, favourite_user_id]
+      [userId, favourite_user_id]
     );
     return res.json({
       success: true,
@@ -22,12 +22,12 @@ async function addFavourite(req, res) {
 }
 
 async function removeFavourite(req, res) {
-  const { user_id, favourite_user_id } = req.body;
+  const { userId, favourite_user_id } = req.body;
 
   try {
     const response = await db.query(
       "DELETE FROM user_favourites WHERE user_id = $1 AND favourite_user_id = $2;",
-      [user_id, favourite_user_id]
+      [userId, favourite_user_id]
     );
     return res.json({
       success: true,
@@ -44,10 +44,7 @@ async function removeFavourite(req, res) {
 
 async function getUserFavourite(req, res) {
   const { favouriteUserId } = req.params;
-  // Get userId from either req.body.userId or from auth middleware
-  const userId = req.body.userId || req.body.user_id;
-
-  console.log("Checking favorite:", { userId, favouriteUserId });
+  const userId = req.body.userId;
 
   try {
     const response = await db.query(
@@ -57,8 +54,6 @@ async function getUserFavourite(req, res) {
 
     // Check if any rows were returned
     const isFavorite = response.rows.length > 0;
-
-    console.log("Favorite check result:", isFavorite);
 
     return res.json({
       success: true,
@@ -75,4 +70,25 @@ async function getUserFavourite(req, res) {
   }
 }
 
-export { addFavourite, removeFavourite, getUserFavourite };
+async function listUserFavourites(req, res) {
+  const userId = req.body.userId;
+
+  try {
+    const response = await db.query(
+      `SELECT u.id, u.name, u.phone, u.freelancer, u.category, 
+              u.profile_image, u.biography, u.portfolio_images
+       FROM users u
+       JOIN user_favourites uf ON u.id = uf.favourite_user_id
+       WHERE uf.user_id = $1`,
+      [userId]
+    );
+
+    const favourites = response.rows;
+    return res.json({ success: true, favourites });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: "Error" });
+  }
+}
+
+export { addFavourite, removeFavourite, getUserFavourite, listUserFavourites };

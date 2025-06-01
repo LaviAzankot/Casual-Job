@@ -6,7 +6,6 @@ import { StoreContext } from "../context/StoreContext.jsx";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
@@ -57,9 +56,6 @@ export default function Navbar() {
             className="profile-options"
             style={{ display: !wasClicked && "none" }}
           >
-            <li name="applies" onClick={handleClick}>
-              Applies
-            </li>
             <li name="favourites" onClick={handleClick}>
               Favourites
             </li>
@@ -70,9 +66,6 @@ export default function Navbar() {
             ) : (
               <li onClick={logout}>Logout</li>
             )}
-            <li name="manage" onClick={handleClick}>
-              Manage
-            </li>
           </ul>
         </div>
       </div>
@@ -82,11 +75,6 @@ export default function Navbar() {
           <li name="home" onClick={handleClick}>
             <SearchIcon sx={{ fontSize: 40 }} />
             Explore
-          </li>
-
-          <li name="applies" onClick={handleClick}>
-            <AssignmentOutlinedIcon sx={{ fontSize: 40 }} />
-            Applies
           </li>
           <li name="favourites" onClick={handleClick}>
             <FavoriteBorderIcon sx={{ fontSize: 40 }} />

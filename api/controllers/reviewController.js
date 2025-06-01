@@ -1,15 +1,13 @@
 import db from "../config/db.js";
 
 async function addReview(req, res) {
-  const { reviewer_id, reviewed_user_id, short_service_desc, review, rating } =
+  const { userId, reviewed_user_id, short_service_desc, review, rating } =
     req.body;
-
-  console.log(req.body);
 
   try {
     const response = await db.query(
       "INSERT INTO reviews (reviewer_id, reviewed_user_id, short_service_desc, review, rating) VALUES ($1, $2, $3, $4, $5);",
-      [reviewer_id, reviewed_user_id, short_service_desc, review, rating]
+      [userId, reviewed_user_id, short_service_desc, review, rating]
     );
     return res.json({
       success: true,
@@ -25,21 +23,15 @@ async function addReview(req, res) {
 }
 
 async function editReview(req, res) {
-  const {
-    id,
-    reviewer_id,
-    reviewed_user_id,
-    short_service_desc,
-    review,
-    rating,
-  } = req.body;
+  const { id, userId, reviewed_user_id, short_service_desc, review, rating } =
+    req.body;
 
   try {
     const response = await db.query(
       `UPDATE reviews 
    SET short_service_desc = $1, review = $2, rating = $3
    WHERE reviewer_id = $4 AND reviewed_user_id = $5 AND id = $6;`,
-      [short_service_desc, review, rating, reviewer_id, reviewed_user_id, id]
+      [short_service_desc, review, rating, userId, reviewed_user_id, id]
     );
 
     return res.json({
@@ -78,16 +70,24 @@ async function removeReview(req, res) {
 
 async function getReviews(req, res) {
   const { reviewedUserId } = req.params;
+  const userId = req.body.userId || null; // Comes from middleware if authenticated
 
   try {
     const response = await db.query(
-      "SELECT * FROM reviews WHERE reviewed_user_id = $1;",
-      [reviewedUserId]
+      `
+      SELECT *,
+        CASE WHEN reviewer_id = $2 THEN true ELSE false END AS is_owner
+      FROM reviews
+      WHERE reviewed_user_id = $1
+      ORDER BY created_at DESC
+      `,
+      [reviewedUserId, userId]
     );
+
     const reviews = response.rows;
     return res.json({
       success: true,
-      message: "Got reviewed user reviews succesfully",
+      message: "Got reviews succesfully",
       reviews,
     });
   } catch (error) {

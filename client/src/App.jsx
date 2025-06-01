@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar.jsx";
 import Login from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Freelancer from "./pages/Freelancer.jsx";
+import Favourites from "./pages/Favourites.jsx";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/favourites" element={<Favourites />} />
         <Route path="/freelancers/:id" element={<Freelancer />} />
       </Routes>
     </div>

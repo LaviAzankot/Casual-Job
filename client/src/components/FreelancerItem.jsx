@@ -11,7 +11,7 @@ import Heart from "../components/Heart.jsx";
 import axios from "axios";
 
 export default function FreelancerItem({ freelancer }) {
-  const { api_port } = useContext(StoreContext);
+  const { api_port, token } = useContext(StoreContext);
   const [wasClicked, setWasClicked] = useState(false);
   const { id, name, profile_image, portfolio_images } = freelancer;
   const [avgRating, setAvgRating] = useState(null);
@@ -26,6 +26,21 @@ export default function FreelancerItem({ freelancer }) {
     setAvgRating(response.data.avgRating);
   }
 
+  async function checkIfFavorite() {
+    if (token) {
+      try {
+        const response = await axios.post(
+          `${api_port}/api/favourite/get/${id}`,
+          {},
+          { headers: { token } }
+        );
+        setWasClicked(response.data.favourite);
+      } catch (error) {
+        console.error("Error checking favorite status:", error);
+      }
+    }
+  }
+
   function handleCardClick() {
     navigate(`/freelancers/${id}`);
   }
@@ -36,12 +51,12 @@ export default function FreelancerItem({ freelancer }) {
 
   useEffect(() => {
     async function getData() {
-      await getAvgRating();
+      await Promise.all([getAvgRating(), checkIfFavorite()]);
       setLoading(false);
     }
 
     getData();
-  }, []);
+  }, [id, token]);
 
   return (
     <div className="freelancer">
@@ -59,9 +74,11 @@ export default function FreelancerItem({ freelancer }) {
 
             <div className="freelancer-info">
               <h2 className="freelancer-name">{name}</h2>
+              <span className="freelancer-category">{freelancer.category}</span>
               <div className="freelancer-operations" onClick={stopPropagation}>
                 <div className="freelancer-favourite">
                   <Heart
+                    freelancerId={id}
                     wasClicked={wasClicked}
                     setWasClicked={setWasClicked}
                   />
